@@ -64,6 +64,10 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
 
                 Toast.makeText(this, aluno.getNome() + " foi registrado com sucesso!",Toast.LENGTH_SHORT).show();
 
+                //fecha a conexao com a base
+                alunoDAO.close();
+
+
                 //fecha a activity
                 finish();
 

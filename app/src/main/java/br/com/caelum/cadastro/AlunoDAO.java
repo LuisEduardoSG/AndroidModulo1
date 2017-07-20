@@ -28,9 +28,9 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 " CREATE TABLE"  + TABELA +
                 " ( id INTEGER PRIMARY KEY, " +
                 " nome      TEXT NOT NULL, " +
-                " telefone  TEXT " +
-                " endereco  TEXT " +
-                " site      TEXT " +
+                " telefone  TEXT, " +
+                " endereco  TEXT, " +
+                " site      TEXT, " +
                 " nota      REAL );";
 
         sqLiteDatabase.execSQL(ddl);
@@ -60,6 +60,6 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
         // método de insert da classe SQLiteDatebase
         getWritableDatabase().insert(TABELA,null,values);
-
+                                            //nullHack, garantia de preencher pelo menos um campo da linha(default)
     }
 }
