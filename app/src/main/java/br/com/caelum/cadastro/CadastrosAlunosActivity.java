@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class CadastrosAlunosActivity extends AppCompatActivity {
 
     private CadastroHelper cadastro;
-
+    private AlunoDAO alunoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +51,29 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
         //verifica qual item que ativou o método
         if (item.getItemId() == R.id.menuSalvar){
 
-            Aluno aluno = cadastro.getAluno();
-            Toast.makeText(CadastrosAlunosActivity.this,"Nome do aluno: " + aluno.getNome(),Toast.LENGTH_SHORT);
-            Toast.makeText(CadastrosAlunosActivity.this,"Nome do aluno: ",Toast.LENGTH_SHORT);
+            //executa código associado ao botão
+            if (cadastro.nomePreenchido()){
+                //
+                Aluno aluno = cadastro.getAluno();
 
 
-            //executa a função do botão
-            finish();
-            //return true caso não é pra executar mais nada
-            return false;
+                //instancia alunoDAO
+                alunoDAO = new AlunoDAO(this);
+                //insere no banco
+                alunoDAO.insere(aluno);
+
+                Toast.makeText(this, aluno.getNome() + " foi registrado com sucesso!",Toast.LENGTH_SHORT).show();
+
+                //fecha a activity
+                finish();
+
+                //return true caso não é pra executar mais nada
+                return false;
+            }else {
+                cadastro.mostrarErro();
+            }
+
+
         }
         //return false caso há outras funções para serem executads
         return false;
