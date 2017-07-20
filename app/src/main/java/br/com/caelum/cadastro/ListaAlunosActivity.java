@@ -15,16 +15,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private ListView listaAlunos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // executa os métodos que contém no onCreate de origem
         super.onCreate(savedInstanceState);
+        //associa a view com a class
         setContentView(R.layout.activity_lista_alunos);
-
-        String[] alunos = {"Anderson","Filipe","Guilherme"};
+        // array de dados para  lista
+        String[] alunos = {"Android","Caelum","Modulo 1", "Git Hub"};
+        //pega a instância da lista que está na View
         this.listaAlunos = (ListView) findViewById(R.id.lista_alunos);
-
+        // retorna uma view me forma de lista, usando uma collection de data
         ArrayAdapter<String> adapter = new
                     ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,alunos);
+        //associa o adapter à lista da activity
         listaAlunos.setAdapter(adapter);
 
+        // associa um item click listener (click rapido) aos itens da lista
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long l) {
                 Toast.makeText(ListaAlunosActivity.this, "Posição selecionada " + posicao, Toast.LENGTH_SHORT).show();
@@ -32,6 +37,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         });
 
+        // associa um item click long listener (click long) aos itens da lista
         listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long l) {
@@ -41,13 +47,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
 
-
+        //instancia do botão add aluno, o floating
         Button addAluno = (Button) findViewById(R.id.addAluno);
+        //seta o clicklistener
         addAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
 //                finish();
+                // instancia uma intenção, passando o contexto e activity que está em foco
                  Intent intent = new Intent(ListaAlunosActivity.this, CadastrosAlunosActivity.class);
+                //da start na intenção
                  startActivity(intent);
             }
         });
