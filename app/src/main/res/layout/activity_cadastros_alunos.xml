@@ -51,13 +51,14 @@
             android:layout_gravity="center"
             android:id="@+id/nota"
             android:numStars="5"
+            android:max="10"
             tools:progressTint="@color/colorPrimary"
             android:progressTint="@color/colorPrimary" />
 
-        <Button
+        <!--<Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Salvar"
-            android:id="@+id/salvar"/>
+            android:id="@+id/salvar"/>-->
     </LinearLayout>
 </ScrollView>

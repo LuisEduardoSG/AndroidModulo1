@@ -13,19 +13,17 @@ import android.widget.Toast;
 
 public class CadastrosAlunosActivity extends AppCompatActivity {
 
-/*  private String nome ;
-    private String telefone;
-    private String endereco;
-    private String site;
-    private Integer nota;
-    private Button salvar;*/
+    private CadastroHelper cadastro;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastros_alunos);
 
-        //pega a instância do botão da view
+        this.cadastro = new CadastroHelper(this);
+
+      /*  //pega a instância do botão da view
         Button salvar = (Button) findViewById(R.id.salvar);
         //dar um set listener no click do botão salvar
         salvar.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +34,7 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
                 //fecha a activity atual
                 finish();
             }
-        });
+        });*/
 
 
     }
@@ -52,10 +50,16 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         //verifica qual item que ativou o método
         if (item.getItemId() == R.id.menuSalvar){
+
+            Aluno aluno = cadastro.getAluno();
+            Toast.makeText(CadastrosAlunosActivity.this,"Nome do aluno: " + aluno.getNome(),Toast.LENGTH_SHORT);
+            Toast.makeText(CadastrosAlunosActivity.this,"Nome do aluno: ",Toast.LENGTH_SHORT);
+
+
             //executa a função do botão
             finish();
             //return true caso não é pra executar mais nada
-            return true;
+            return false;
         }
         //return false caso há outras funções para serem executads
         return false;
