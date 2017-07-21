@@ -59,7 +59,6 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
                 //
                 Aluno aluno = cadastro.getAluno();
 
-
                 //insere no banco
                 alunoDAO.insere(aluno);
 
@@ -67,7 +66,6 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
 
                 //fecha a conexao com a base
                 alunoDAO.close();
-
 
                 //fecha a activity
                 finish();
@@ -77,8 +75,6 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
             }else {
                 cadastro.mostrarErro();
             }
-
-
         }
         //return false caso há outras funções para serem executads
         return false;

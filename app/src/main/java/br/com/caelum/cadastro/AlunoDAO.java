@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by android6920 on 20/07/17.
  */
 
-public class AlunoDAO extends SQLiteOpenHelper{
+ class AlunoDAO extends SQLiteOpenHelper{
     //constantes que serão usadas várias vezes, evitando
     // repetição dos teus valores no corpo da classe
     private static final int VERSAO = 1;
@@ -92,4 +91,8 @@ public class AlunoDAO extends SQLiteOpenHelper{
     }
 
 
+    public void deletar(Aluno alunoSelec) {
+        //deleta da base, o aluno
+        getWritableDatabase().delete(TABELA,"id = ?", new String[] {alunoSelec.getId().toString()});
+    }
 }
