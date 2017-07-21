@@ -14,7 +14,6 @@ import android.widget.Toast;
 public class CadastrosAlunosActivity extends AppCompatActivity {
 
     private CadastroHelper cadastro;
-    private AlunoDAO alunoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +52,14 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
 
             //executa código associado ao botão
             if (cadastro.nomePreenchido()){
+
+
+                //instancia alunoDAO
+                AlunoDAO alunoDAO = new AlunoDAO(this);
                 //
                 Aluno aluno = cadastro.getAluno();
 
 
-                //instancia alunoDAO
-                alunoDAO = new AlunoDAO(this);
                 //insere no banco
                 alunoDAO.insere(aluno);
 

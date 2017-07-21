@@ -8,12 +8,12 @@ import android.widget.Button;
 
 public class Aluno {
 
-    private String nome ;
+    private String nome;
     private String telefone;
     private String endereco;
     private String site;
     private Double nota;
-    private Float id;
+    private Long id;
 
     public String getNome() {
         return nome;
@@ -35,7 +35,7 @@ public class Aluno {
         return nota;
     }
 
-    public Float getId() {
+    public Long getId() {
         return id;
     }
 
@@ -43,7 +43,7 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public void setId(Float id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -63,4 +63,9 @@ public class Aluno {
         this.telefone = telefone;
     }
 
+
+    @Override
+    public String toString() {
+        return this.getId() + "-" + this.getNome();
+    }
 }

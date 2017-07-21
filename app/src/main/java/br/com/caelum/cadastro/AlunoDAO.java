@@ -3,8 +3,12 @@ package br.com.caelum.cadastro;
 import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by android6920 on 20/07/17.
@@ -25,8 +29,8 @@ public class AlunoDAO extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String ddl =
-                " CREATE TABLE"  + TABELA +
-                " ( id INTEGER PRIMARY KEY, " +
+                " CREATE TABLE "  + TABELA +
+                " (id INTEGER PRIMARY KEY, " +
                 " nome      TEXT NOT NULL, " +
                 " telefone  TEXT, " +
                 " endereco  TEXT, " +
@@ -62,4 +66,30 @@ public class AlunoDAO extends SQLiteOpenHelper{
         getWritableDatabase().insert(TABELA,null,values);
                                             //nullHack, garantia de preencher pelo menos um campo da linha(default)
     }
+
+
+    public  List<Aluno> getLista(){
+        List<Aluno> alunos = new ArrayList<Aluno>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABELA + ";",null);
+
+        while (c.moveToNext()){
+            Aluno aluno = new Aluno();
+
+            aluno.setId(c.getLong(c.getColumnIndex("id")));
+            aluno.setNome(c.getString(c.getColumnIndex("nome")));
+            aluno.setTelefone(c.getString(c.getColumnIndex("telefone")));
+            aluno.setEndereco(c.getString(c.getColumnIndex("endereco")));
+            aluno.setSite(c.getString(c.getColumnIndex("site")));
+            aluno.setNota(c.getDouble(c.getColumnIndex("nota")));
+
+            alunos.add(aluno);
+        }
+
+        c.close();
+        return alunos;
+    }
+
+
 }

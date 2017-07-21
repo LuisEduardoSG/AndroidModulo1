@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
+    private List<Aluno> alunos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,20 +26,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
         //associa a view com a class
         setContentView(R.layout.activity_lista_alunos);
 
-        // array de dados para  lista
-        String[] alunos = {"Android","Caelum","Modulo 1", "Git Hub"};
+        AlunoDAO dao = new AlunoDAO(this);
+        alunos = dao.getLista();
+        dao.close();
 
         //pega a instância da lista que está na View
         this.listaAlunos = (ListView) findViewById(R.id.lista_alunos);
 
+       /*
         // retorna uma view me forma de lista, usando uma collection de data
-        ArrayAdapter<String> adapter = new
-                ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,alunos);
+        ArrayAdapter<Aluno> adapter = new
+                ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
 
-        //ArrayAdapter<String> adapter = new
-         //       ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+
         //associa o adapter à lista da activity
         listaAlunos.setAdapter(adapter);
+        */
 
         // associa um item click listener (click rapido) aos itens da lista
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +78,31 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    protected void onResume(){
+        super.onResume();
+        this.carregarLista();
+
+    }
+
+    private void carregarLista() {
+
+        AlunoDAO dao = new AlunoDAO(this);
+        List<Aluno> alunos = dao.getLista();
+        dao.close();
+
+
+      /*  //pega a instância da lista que está na View
+        this.listaAlunos = (ListView) findViewById(R.id.lista_alunos);*/
+
+        // retorna uma view me forma de lista, usando uma collection de data
+        ArrayAdapter<Aluno> adapter = new
+                ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
+
+
+        //associa o adapter à lista da activity
+        listaAlunos.setAdapter(adapter);
 
     }
 }
