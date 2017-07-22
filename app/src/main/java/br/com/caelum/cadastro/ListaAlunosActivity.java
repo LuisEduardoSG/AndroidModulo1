@@ -1,8 +1,11 @@
 package br.com.caelum.cadastro;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.StringDef;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -21,6 +24,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
     private List<Aluno> alunos;
+    private static final int REQUEST_LIGACAO = 123;
+
+    private Aluno alunoSelecionado;
 
     public static final String ALUNO_SELECIONADO = "alunoSelecionado";
 
@@ -110,6 +116,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
 
+
+
     }
 
     protected void onResume(){
@@ -140,8 +148,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     // exercício 5.3 pag 88
     public void onCreateContextMenu (ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
-                menuInfo;
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
         //final para preservar o endereço na memória
         final Aluno alunoSelec = (Aluno) listaAlunos.getAdapter().getItem(info.position);
@@ -149,7 +157,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // adicionao botão no context menu
         MenuItem excluir = menu.add("excluir");
 
-        //cria o listener desse botao
+        alunoSelecionado = alunoSelec;
+
+
+                //cria o listener desse botao
         excluir.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -168,9 +179,23 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         //adicionando novos context menu item, utilizando de intents implicitas
         MenuItem ligar= menu.add("Ligar");
-        Intent fazerLigacao = new Intent (Intent.ACTION_CALL);
-        fazerLigacao.setData(Uri.parse("tel:"+ alunoSelec.getTelefone()));
-        ligar.setIntent(fazerLigacao);
+
+        ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                String permissaoLigar = Manifest.permission.CALL_PHONE;
+                if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, permissaoLigar)
+                        == PackageManager.PERMISSION_GRANTED){
+                    fazerLigacao();
+                }
+                else {
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{permissaoLigar}, REQUEST_LIGACAO);
+                }
+                return true;
+            }
+        });
+
+
 
         MenuItem sms = menu.add("Enviar SMS");
         Intent enviarSMS = new Intent (Intent.ACTION_VIEW);
@@ -187,6 +212,29 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Intent abrirSite = new Intent (Intent.ACTION_VIEW);
         abrirSite.setData(Uri.parse("http://"+ alunoSelec.getSite()));
         site.setIntent(abrirSite);
+
+
+    }
+
+
+
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int [] resultados){
+        if (requestCode == REQUEST_LIGACAO){
+            if(resultados[0] == PackageManager.PERMISSION_GRANTED){
+                fazerLigacao();
+            } else
+            {
+                //toast
+            }
+        }
+    }
+    @SuppressWarnings({"MissingPermission"})
+    private void fazerLigacao() {
+        Intent Ligacao = new Intent (Intent.ACTION_CALL);
+
+        Ligacao.setData(Uri.parse("tel:"+ alunoSelecionado.getTelefone()));
+
+        startActivity(Ligacao);
 
 
     }
