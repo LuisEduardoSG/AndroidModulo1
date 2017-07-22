@@ -166,6 +166,28 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
 
+        //adicionando novos context menu item, utilizando de intents implicitas
+        MenuItem ligar= menu.add("Ligar");
+        Intent fazerLigacao = new Intent (Intent.ACTION_CALL);
+        fazerLigacao.setData(Uri.parse("tel:"+ alunoSelec.getTelefone()));
+        ligar.setIntent(fazerLigacao);
+
+        MenuItem sms = menu.add("Enviar SMS");
+        Intent enviarSMS = new Intent (Intent.ACTION_VIEW);
+        enviarSMS.setData(Uri.parse("sms:"+ alunoSelec.getTelefone()));
+        enviarSMS.putExtra("sms_body", "Hello World");
+        sms.setIntent(enviarSMS);
+
+        MenuItem mapa=  menu.add("Abrir no mapa");
+        Intent abrirMapa = new Intent (Intent.ACTION_VIEW);
+        abrirMapa.setData(Uri.parse("geo: 0,0?z=06&q="+ Uri.encode(alunoSelec.getEndereco())));
+        mapa.setIntent(abrirMapa);
+
+        MenuItem site= menu.add("Abrir no Navegador");
+        Intent abrirSite = new Intent (Intent.ACTION_VIEW);
+        abrirSite.setData(Uri.parse("http://"+ alunoSelec.getSite()));
+        site.setIntent(abrirSite);
+
 
     }
 
