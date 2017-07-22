@@ -29,12 +29,15 @@ public class CadastroHelper {
         this.endereco= (EditText) activity.findViewById(R.id.endereco);
         this.site= (EditText) activity.findViewById(R.id.site);
         this.nota= (RatingBar) activity.findViewById(R.id.nota);
+
+        aluno = new Aluno();
     }
 
 
     public Aluno getAluno(){
-        Aluno aluno = new Aluno();
 
+
+        /* pega os dados do aluno da variável global*/
         aluno.setNome(nome.getText().toString());
         aluno.setTelefone(telefone.getText().toString());
         aluno.setEndereco(endereco.getText().toString());
@@ -48,5 +51,17 @@ public class CadastroHelper {
 
     public void mostrarErro() {
         nome.setError("Campo nome não pode ser vazio, favor preencher");
+    }
+
+    public void ColocaAlunoNoForm(Aluno aluno) {
+
+
+        nome.setText(aluno.getNome());
+        telefone.setText(aluno.getTelefone());
+        endereco.setText(aluno.getEndereco());
+        site.setText(aluno.getSite());
+        nota.setRating(aluno.getNota().intValue());
+
+        this.aluno = aluno;
     }
 }

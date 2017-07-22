@@ -1,6 +1,7 @@
 package br.com.caelum.cadastro;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +14,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
     private List<Aluno> alunos;
+
+    public static final String ALUNO_SELECIONADO = "alunoSelecionado";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,12 +58,32 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
 
         // associa um item click listener (click rapido) aos itens da lista
-        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long l) {
                 Toast.makeText(ListaAlunosActivity.this, "Posição selecionada " + posicao, Toast.LENGTH_SHORT).show();
             }
+        });*/
 
+        //Enviar o Aluno selecionado no clique no item
+        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+
+                Intent edicao = new Intent(ListaAlunosActivity.this, CadastrosAlunosActivity.class);
+
+                Aluno aluno = (Aluno) adapterView.getItemAtPosition(pos);
+
+                edicao.putExtra(ALUNO_SELECIONADO,  aluno);
+
+
+                startActivity(edicao);
+
+
+
+            }
         });
+
+
 
         // associa um item click long listener (click long) aos itens da lista
        /* listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -120,7 +146,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         //final para preservar o endereço na memória
         final Aluno alunoSelec = (Aluno) listaAlunos.getAdapter().getItem(info.position);
                                         //listaAlunos.getItemAtPosition(info.position);
-    // adicionao botão no context menu
+        // adicionao botão no context menu
         MenuItem excluir = menu.add("excluir");
 
         //cria o listener desse botao

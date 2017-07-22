@@ -14,6 +14,7 @@ import android.widget.Toast;
 public class CadastrosAlunosActivity extends AppCompatActivity {
 
     private CadastroHelper cadastro;
+    public static final String ALUNO_SELECIONADO = "alunoSelecionado";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,14 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastros_alunos);
 
         this.cadastro = new CadastroHelper(this);
+
+        Intent intent =  this.getIntent();
+
+        Aluno aluno = (Aluno) intent.getSerializableExtra(ALUNO_SELECIONADO);
+
+        if (aluno != null){
+            cadastro.ColocaAlunoNoForm(aluno);
+        }
 
       /*  //pega a instância do botão da view
         Button salvar = (Button) findViewById(R.id.salvar);
@@ -59,16 +68,24 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
                 //
                 Aluno aluno = cadastro.getAluno();
 
-                //insere no banco
-                alunoDAO.insere(aluno);
 
+                if(aluno.getId() != null){
+                    //altera no banco
+                    alunoDAO.altera(aluno);
+                }else {
+
+                    //insere no banco
+                    alunoDAO.insere(aluno);
+
+                }
+
+                //confirmação de insert
                 Toast.makeText(this, aluno.getNome() + " foi registrado com sucesso!",Toast.LENGTH_SHORT).show();
-
                 //fecha a conexao com a base
                 alunoDAO.close();
-
                 //fecha a activity
                 finish();
+
 
                 //return true caso não é pra executar mais nada
                 return false;

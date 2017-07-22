@@ -2,11 +2,13 @@ package br.com.caelum.cadastro;
 
 import android.widget.Button;
 
+import java.io.Serializable;
+
 /**
  * Created by android6920 on 19/07/17.
  */
 
-public class Aluno {
+public class Aluno implements Serializable{
 
     private String nome;
     private String telefone;

@@ -95,4 +95,22 @@ import java.util.List;
         //deleta da base, o aluno
         getWritableDatabase().delete(TABELA,"id = ?", new String[] {alunoSelec.getId().toString()});
     }
+
+    public void altera(Aluno aluno) {
+        //instancia o content
+        ContentValues values = new ContentValues();
+
+        //preenche o content
+        values.put("nome"       ,aluno.getNome());
+        values.put("telefone"   ,aluno.getTelefone());
+        values.put("endereco"   ,aluno.getEndereco());
+        values.put("site"       ,aluno.getSite());
+        values.put("nota"       ,aluno.getNota());
+
+        String[] args = {aluno.getId().toString()};
+
+        // método de insert da classe SQLiteDatebase
+        getWritableDatabase().update(TABELA,values,"id=?",args);
+
+    }
 }
