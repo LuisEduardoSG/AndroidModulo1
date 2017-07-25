@@ -12,6 +12,34 @@
         android:orientation="vertical"
         tools:context="br.com.caelum.cadastro.CadastrosAlunosActivity">
 
+        <!--Exercício 7.4 pag 118-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="235dp">
+
+            <ImageView android:id="@+id/cad_foto"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#00A8EC"
+                android:src="@drawable/person"/>
+
+
+            <Button
+                android:id="@+id/cad_foto_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cad_foto_button"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:elevation="5dp"/>
+
+
+        </RelativeLayout>
 
         <EditText
             android:layout_width="match_parent"

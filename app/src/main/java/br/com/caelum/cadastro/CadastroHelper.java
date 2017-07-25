@@ -1,7 +1,12 @@
 package br.com.caelum.cadastro;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.DateFormat;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 /**
@@ -17,12 +22,18 @@ public class CadastroHelper {
     private EditText site;
     private RatingBar nota;
 
+    private ImageView foto;
+    private Button fotoButton;
+
     public boolean nomePreenchido(){
         return !nome.getText().toString().isEmpty();
     }
 
 
     public CadastroHelper (CadastrosAlunosActivity activity){
+
+        this.foto = (ImageView) activity.findViewById(R.id.cad_foto);
+        this.fotoButton = (Button) activity.findViewById(R.id.cad_foto_button);
 
         this.nome = (EditText) activity.findViewById(R.id.nome);
         this.telefone = (EditText) activity.findViewById(R.id.telefone);
@@ -34,7 +45,7 @@ public class CadastroHelper {
     }
 
 
-    public Aluno getAluno(){
+    public Aluno pegaAlunoDoForm(){
 
 
         /* pega os dados do aluno da variável global*/
@@ -45,6 +56,9 @@ public class CadastroHelper {
 
         aluno.setNota(Double.valueOf(nota.getRating()));
         //aluno.setNota(Double.valueOf(nota.getProgress()));
+
+        aluno.setCaminhoFoto((String) foto.getTag());
+
 
         return aluno;
     }
@@ -63,5 +77,21 @@ public class CadastroHelper {
         nota.setRating(aluno.getNota().intValue());
 
         this.aluno = aluno;
+    }
+
+    public Button getFotoButton() {
+        return fotoButton;
+    }
+
+    //Ativ 7.4 pag 118 carregar a imagem nos forms
+    public void carregarImagem(String localArquivoFoto) {
+        // carrega a foto na memória
+        Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
+        // criando outro bitmap que carrega a foto de maneira reduzida
+        Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, imagemFoto.getWidth(), 300, true);
+
+        foto.setImageBitmap(imagemFotoReduzida);
+        foto.setTag(localArquivoFoto);
+        foto.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 }

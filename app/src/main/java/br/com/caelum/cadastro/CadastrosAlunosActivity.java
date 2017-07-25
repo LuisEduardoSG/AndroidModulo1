@@ -1,6 +1,9 @@
 package br.com.caelum.cadastro;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +14,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class CadastrosAlunosActivity extends AppCompatActivity {
 
     private CadastroHelper cadastro;
     public static final String ALUNO_SELECIONADO = "alunoSelecionado";
+
+    private String localArquivoFoto;
+    private static final int REQUEST_CAMERA = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +39,33 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
         if (aluno != null){
             cadastro.ColocaAlunoNoForm(aluno);
         }
+        //Ativ 7.4 pag 118 - Setando clickno button do Cadastro
+        Button foto = cadastro.getFotoButton();
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // caminho do arquivo, pegar a referencia do diretório da aplicação  na memória externa
+                    // recebe um parametro que define o tipo de media que será criado, este irá criar um subpasta
+                //
+                 localArquivoFoto = getExternalFilesDir(null) +
+                            "/" + System.currentTimeMillis()+".jpg";
+
+                //chamar intent implícita para a camera
+
+                Intent abreCamera = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+                //criar a versão URI para o caminho do local da fot
+                Uri localFoto = Uri.fromFile(new File(localArquivoFoto));
+
+                //para esta situação, há uma chave padrão
+                abreCamera.putExtra(MediaStore.EXTRA_OUTPUT, localFoto);
+
+                //haverá um retorno(user tirou ou não a foto) e por conta disso, é necessário
+                // esse método que irá direto ao OnActivityResult
+                startActivityForResult(abreCamera, REQUEST_CAMERA);
+
+            }
+        });
+
 
       /*  //pega a instância do botão da view
         Button salvar = (Button) findViewById(R.id.salvar);
@@ -66,7 +102,7 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
                 //instancia alunoDAO
                 AlunoDAO alunoDAO = new AlunoDAO(this);
                 //
-                Aluno aluno = cadastro.getAluno();
+                Aluno aluno = cadastro.pegaAlunoDoForm();
 
 
                 if(aluno.getId() != null){
@@ -95,6 +131,24 @@ public class CadastrosAlunosActivity extends AppCompatActivity {
         }
         //return false caso há outras funções para serem executads
         return false;
+    }
+
+
+    //Ativ 7.4 pag 118  callback da camera
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {   // verifica se é o código da camera
+        if (requestCode == REQUEST_CAMERA){
+            //verifica se o resultado da activity é positivo
+            if (resultCode == Activity.RESULT_OK){
+                //carrega a imagem
+                cadastro.carregarImagem(this.localArquivoFoto);
+            } else {
+                // é setado como nulo
+                this.localArquivoFoto = null;
+            }
+        }
+
     }
 
 }
