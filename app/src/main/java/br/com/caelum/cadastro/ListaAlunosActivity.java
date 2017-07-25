@@ -156,16 +156,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        //final para preservar o endereço na memória
+        // final para preservar o endereço na memória
         final Aluno alunoSelec = (Aluno) listaAlunos.getAdapter().getItem(info.position);
-                                        //listaAlunos.getItemAtPosition(info.position);
+                                        // listaAlunos.getItemAtPosition(info.position);
         // adicionao botão no context menu
         MenuItem excluir = menu.add("excluir");
 
         alunoSelecionado = alunoSelec;
 
-
-                //cria o listener desse botao
+        //cria o listener desse botao
         excluir.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
