@@ -22,6 +22,7 @@ public class CadastroHelper {
     private EditText site;
     private RatingBar nota;
 
+
     private ImageView foto;
     private Button fotoButton;
 
@@ -40,6 +41,7 @@ public class CadastroHelper {
         this.endereco= (EditText) activity.findViewById(R.id.endereco);
         this.site= (EditText) activity.findViewById(R.id.site);
         this.nota= (RatingBar) activity.findViewById(R.id.nota);
+
 
         aluno = new Aluno();
     }
@@ -75,7 +77,9 @@ public class CadastroHelper {
         endereco.setText(aluno.getEndereco());
         site.setText(aluno.getSite());
         nota.setRating(aluno.getNota().intValue());
-
+        if (aluno.getCaminhoFoto() != null) {
+            carregarImagem(aluno.getCaminhoFoto());
+        }
         this.aluno = aluno;
     }
 

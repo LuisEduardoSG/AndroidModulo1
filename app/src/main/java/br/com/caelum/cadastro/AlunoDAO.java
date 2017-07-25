@@ -13,10 +13,12 @@ import java.util.List;
  * Created by android6920 on 20/07/17.
  */
 
- class AlunoDAO extends SQLiteOpenHelper{
+class AlunoDAO extends SQLiteOpenHelper{
     //constantes que serão usadas várias vezes, evitando
     // repetição dos teus valores no corpo da classe
-    private static final int VERSAO = 1;
+
+
+    private static final int VERSAO = 2;//alterado na Ativ 7.5 Pag124
     private static final String TABELA = "Alunos";
     private static final String DATABASE = "CadastroCaelum";
 
@@ -29,22 +31,23 @@ import java.util.List;
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String ddl =
                 " CREATE TABLE "  + TABELA +
-                " (id INTEGER PRIMARY KEY, " +
-                " nome      TEXT NOT NULL, " +
-                " telefone  TEXT, " +
-                " endereco  TEXT, " +
-                " site      TEXT, " +
-                " nota      REAL );";
+                        " (id INTEGER PRIMARY KEY, " +
+                        " nome      TEXT NOT NULL, " +
+                        " telefone  TEXT, " +
+                        " endereco  TEXT, " +
+                        " site      TEXT, " +
+                        " nota      REAL, " +
+                        " caminhoFoto TEXT );";
 
         sqLiteDatabase.execSQL(ddl);
     }
 
-
+    //alterado na Ativ 7.5 Pag124
     @Override                                            // v = versão
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int vAntiga, int vNova) {
-        String sql  = "DROP TABLE IF EXISTS " + TABELA ;
+        String sql  = "ALTER TABLE " + TABELA + " ADD COLUMN caminhoFoto TEXT;";
         sqLiteDatabase.execSQL(sql);
-        onCreate(sqLiteDatabase);
+
 
     }
 
@@ -60,10 +63,12 @@ import java.util.List;
         values.put("endereco"   ,aluno.getEndereco());
         values.put("site"       ,aluno.getSite());
         values.put("nota"       ,aluno.getNota());
+        //alterado na Ativ 7.5 Pag124
+        values.put("caminhoFoto",aluno.getCaminhoFoto());
 
         // método de insert da classe SQLiteDatebase
         getWritableDatabase().insert(TABELA,null,values);
-                                            //nullHack, garantia de preencher pelo menos um campo da linha(default)
+        //nullHack, garantia de preencher pelo menos um campo da linha(default)
     }
 
 
@@ -82,6 +87,8 @@ import java.util.List;
             aluno.setEndereco(c.getString(c.getColumnIndex("endereco")));
             aluno.setSite(c.getString(c.getColumnIndex("site")));
             aluno.setNota(c.getDouble(c.getColumnIndex("nota")));
+            //alterado na Ativ 7.5 Pag124
+            aluno.setCaminhoFoto(c.getString(c.getColumnIndex("caminhoFoto")));
 
             alunos.add(aluno);
         }
@@ -106,6 +113,8 @@ import java.util.List;
         values.put("endereco"   ,aluno.getEndereco());
         values.put("site"       ,aluno.getSite());
         values.put("nota"       ,aluno.getNota());
+        //alterado na Ativ 7.5 Pag124
+        values.put("caminhoFoto",aluno.getCaminhoFoto());
 
         String[] args = {aluno.getId().toString()};
 

@@ -1,6 +1,7 @@
 package br.com.caelum.cadastro;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -136,9 +137,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
       /*  //pega a instância da lista que está na View
         this.listaAlunos = (ListView) findViewById(R.id.lista_alunos);*/
 
+
+    //retirado na criação do ListaAlunosAdapter
         // retorna uma view me forma de lista, usando uma collection de data
-        ArrayAdapter<Aluno> adapter = new
-                ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
+/*        ArrayAdapter<Aluno> adapter = new
+                ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);*/
+
+        ListaAlunosAdapter adapter = new ListaAlunosAdapter(alunos, this);
 
 
         //associa o adapter à lista da activity
