@@ -10,6 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,16 +82,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
                 Aluno aluno = (Aluno) adapterView.getItemAtPosition(pos);
 
-                edicao.putExtra(ALUNO_SELECIONADO,  aluno);
+                edicao.putExtra(ALUNO_SELECIONADO, aluno);
 
 
                 startActivity(edicao);
 
 
-
             }
         });
-
 
 
         // associa um item click long listener (click long) aos itens da lista
@@ -108,15 +108,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
         //seta o clicklistener
         addAluno.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 // instancia uma intenção, passando o contexto e activity que está em foco
-                 Intent intent = new Intent(ListaAlunosActivity.this, CadastrosAlunosActivity.class);
+                Intent intent = new Intent(ListaAlunosActivity.this, CadastrosAlunosActivity.class);
                 //da start na intenção
-                 startActivity(intent);
+                startActivity(intent);
             }
         });
-
-
 
 
     }
@@ -130,7 +128,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private void carregarLista() {
 
         AlunoDAO dao = new AlunoDAO(this);
-        List<Aluno> alunos = dao.getLista();
+        this.alunos = dao.getLista();
         dao.close();
 
 
@@ -243,5 +241,35 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     }
 
+
+
+    public boolean onCreateOptionsMenu (Menu menu){
+        //classe usada para interpretar xml e montar menus
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_lista_alunos, menu);
+        // se true, mostra o menu no load, caso contrário, Não mostra
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //verifica qual item que ativou o método
+        if (item.getItemId() == R.id.menuSubir){
+
+            //Cria a instancia do banco e passa o contexto
+            //AlunoDAO dao = new AlunoDAO(this);
+
+
+            //this.alunos = dao.getLista();
+
+
+
+            String json = new AlunoConverter().toJson(this.alunos);
+            WebClient client  = new WebClient();
+            String resposta = client.post(json);
+
+            Toast.makeText(this,resposta,Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
+    }
 
 }
