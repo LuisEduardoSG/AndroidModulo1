@@ -253,7 +253,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //verifica qual item que ativou o método
         if (item.getItemId() == R.id.menuSubir){
-
+            // Ex 10.4 Pg 142
             //Cria a instancia do banco e passa o contexto
             //AlunoDAO dao = new AlunoDAO(this);
 
@@ -262,14 +262,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
 
 
-            String json = new AlunoConverter().toJson(this.alunos);
+           /* String json = new AlunoConverter().toJson(this.alunos);
             WebClient client  = new WebClient();
             String resposta = client.post(json);
 
-            Toast.makeText(this,resposta,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,resposta,Toast.LENGTH_SHORT).show();*/
+
+
+            // Ex 11.2 Pg 148
+            new EnviaAlunosTask(this).execute();
+            return  true;
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
 }
