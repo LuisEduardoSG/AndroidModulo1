@@ -37,9 +37,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".CadastrosAlunosActivity">
-
-        </activity>
+        <activity android:name=".CadastrosAlunosActivity"></activity>
+        <activity android:name=".ProvasActivity"></activity>
     </application>
 
 </manifest>

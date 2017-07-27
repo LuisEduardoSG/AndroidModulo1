@@ -1,13 +1,16 @@
-package Fragment;
+package br.com.caelum.cadastro;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import java.io.PrintStream;
@@ -27,14 +30,11 @@ public class ListaProvasFragment extends Fragment {
     private ListView listViewProvas;
 
 
-    @Override
-    public Context getContext() {
-        return super.getContext();
-    }
-                            //inflater da classe                        //girar a tela
+                      //inflater da classe                        //girar a tela
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle){
-                                                                            //se a
-        View view = inflater.inflate(R.layout.fragment_lista_provas,  parent,true);
+
+
+        View view = inflater.inflate(R.layout.fragment_lista_provas,  parent,false);
 
         listViewProvas =  (ListView) view.findViewById(R.id.lista_provas);
 
@@ -54,7 +54,22 @@ public class ListaProvasFragment extends Fragment {
         //
         listViewProvas.setAdapter(adapter);
 
-         return view;
+        // listener para click em cada matéria
+        this.listViewProvas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Prova seleionada = (Prova) adapterView.getItemAtPosition(pos);
+
+                View layoutProvas = inflater.inflate(R.layout.fragment_lista_provas,parent, false);
+
+                this.listViewProvas = (ListView) layoutProvas.findViewById(R.id.provas_view);
+
+            }
+        });
+
+     return view;
+
+
 
     }
 }

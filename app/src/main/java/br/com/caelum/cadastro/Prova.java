@@ -1,12 +1,13 @@
 package br.com.caelum.cadastro;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by android6920 on 26/07/17.
  */
 
-public class Prova {
+public class Prova implements Serializable{
     String materia;
     String data;
     List<String> topicos;
@@ -40,5 +41,8 @@ public class Prova {
         this.data = data;
     }
 
-
+    @Override
+    public String toString() {
+        return materia;
+    }
 }

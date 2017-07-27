@@ -273,6 +273,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
             new EnviaAlunosTask(this).execute();
             return  true;
         }
+        else if (item.getItemId() == R.id.menuDownload){
+            Intent provas = new Intent(this, ProvasActivity.class);
+            startActivity(provas);
+            return true;
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
