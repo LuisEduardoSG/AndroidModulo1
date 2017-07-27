@@ -34,40 +34,43 @@ public class ListaProvasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle bundle){
 
 
-        View view = inflater.inflate(R.layout.fragment_lista_provas,  parent,false);
+            View layoutProvas = inflater.inflate(R.layout.fragment_lista_provas,  parent,false);
 
-        listViewProvas =  (ListView) view.findViewById(R.id.lista_provas);
+            listViewProvas =  (ListView) layoutProvas.findViewById(R.id.lista_provas);
 
-        List<Prova> provas = new ArrayList<>();
+            List<Prova> provas = new ArrayList<>();
 
-        Prova  prova1 =  new Prova("Matemática", "26/07/2017");
-                        //cria uma lista
-        prova1.setTopicos(Arrays.asList("Geometria","Báskara"));
+            Prova  prova1 =  new Prova("Matemática", "26/07/2017");
+                            //cria uma lista
+            prova1.setTopicos(Arrays.asList("Geometria","Báskara"));
 
-        provas.add(prova1);
+            provas.add(prova1);
 
-        //o tipo do Array Adapter sempre será do mesmo tipo que será adicionado à ele
-        //getActivity() - recupera o contexto
-        ArrayAdapter<Prova> adapter = new ArrayAdapter<Prova>(getActivity(),
-                android.R.layout.simple_list_item_1,provas);
+            //o tipo do Array Adapter sempre será do mesmo tipo que será adicionado à ele
+            //getActivity() - recupera o contexto
+            ArrayAdapter<Prova> adapter = new ArrayAdapter<Prova>(getActivity(),
+                    android.R.layout.simple_list_item_1,provas);
 
-        //
-        listViewProvas.setAdapter(adapter);
+            //
+            listViewProvas.setAdapter(adapter);
 
-        // listener para click em cada matéria
-        this.listViewProvas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Prova seleionada = (Prova) adapterView.getItemAtPosition(pos);
 
-                View layoutProvas = inflater.inflate(R.layout.fragment_lista_provas,parent, false);
+            //13.3 pag 161
+            this.listViewProvas = (ListView) layoutProvas.findViewById(R.id.lista_provas);
 
-                this.listViewProvas = (ListView) layoutProvas.findViewById(R.id.provas_view);
 
-            }
-        });
+            // listener para click em cada matéria
+            this.listViewProvas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    Prova seleionada = (Prova) adapterView.getItemAtPosition(pos);
 
-     return view;
+
+
+                }
+            });
+
+         return layoutProvas;
 
 
 

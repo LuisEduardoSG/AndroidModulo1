@@ -28,11 +28,8 @@ public class ProvasActivity extends AppCompatActivity{
             transaction.replace(R.id.provas_view, new ListaProvasFragment());
         }
 
-
-
         //executar na transaction
         transaction.commit();
-
 
     }
 
