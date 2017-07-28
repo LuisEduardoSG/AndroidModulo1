@@ -3,6 +3,7 @@ package br.com.caelum.cadastro;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +45,8 @@ public class MostraAlunosAcivity extends FragmentActivity implements OnMapReadyC
     //onde se trabalha com o map
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        GPS gps = new GPS(this);
 
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> alunos = dao.getLista();
