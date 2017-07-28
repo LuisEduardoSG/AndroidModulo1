@@ -3,6 +3,7 @@ package br.com.caelum.cadastro;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,10 +63,11 @@ public class MostraAlunosAcivity extends FragmentActivity implements OnMapReadyC
                 mMap.addMarker(mkOptions);
             }
 
+
         }
-
-
-
+        if (alunos != null){
+            centralizaNo(local.GetCoordenadas(alunos.get(0).getEndereco()));
+        }
 
 
         // Add a marker in Sydney and move the camera
@@ -77,6 +79,11 @@ public class MostraAlunosAcivity extends FragmentActivity implements OnMapReadyC
     }
 
 
+    public void centralizaNo(LatLng coordenada){
+        //
+        CameraUpdate camera = CameraUpdateFactory.newLatLngZoom(coordenada,16);
+        mMap.moveCamera(camera);
 
+    }
 
 }
