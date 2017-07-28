@@ -26,10 +26,10 @@ public class Localizador {
 
             List<Address> enderecos = geo.getFromLocationName(enderecoAlu,1);
 
-            if (enderecos.isEmpty()){
+            if (!enderecos.isEmpty()){
                 Address ende = enderecos.get(0);
-                LatLng coord = new LatLng(ende.getLatitude(),ende.getLongitude());
-                return coord;
+                return new LatLng(ende.getLatitude(),ende.getLongitude());
+
             }
 
             return null;
