@@ -14,4 +14,12 @@
         app:showAsAction="always"
 
         />
+
+
+    <item android:title="mapa"
+        android:id="@+id/menuMap"
+        android:icon="@drawable/ic_mapa"
+        app:showAsAction="always"
+
+        />
 </menu>

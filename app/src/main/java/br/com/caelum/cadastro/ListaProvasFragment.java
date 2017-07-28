@@ -37,6 +37,7 @@ public class ListaProvasFragment extends Fragment {
 
             //13.3 pag 161
             this.listViewProvas =  (ListView) layoutProvas.findViewById(R.id.lista_provas);
+
             List<Prova> provas = new ArrayList<>();
             Prova  prova1 =  new Prova("Matemática", "26/07/2017");
                             //cria uma lista

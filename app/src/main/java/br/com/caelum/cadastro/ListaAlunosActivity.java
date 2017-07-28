@@ -278,6 +278,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
             startActivity(provas);
             return true;
 
+        } else if (item.getItemId() == R.id.menuMap){
+            Intent mostrarAlunos = new Intent(this, MostraAlunosAcivity.class);
+            startActivity(mostrarAlunos);
+            return true;
+
         }
 
         return super.onOptionsItemSelected(item);

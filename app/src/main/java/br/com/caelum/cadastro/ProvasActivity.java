@@ -66,6 +66,7 @@ public class ProvasActivity extends AppCompatActivity{
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         //sobre poe a outra fragmnts
             transaction.replace(R.id.provas_view,detalhesProva);
+            //recebe um identificadorna frag
             transaction.addToBackStack(null);
 
             transaction.commit();
