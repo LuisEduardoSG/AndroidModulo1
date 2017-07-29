@@ -21,10 +21,13 @@ class AlunoDAO extends SQLiteOpenHelper{
     private static final int VERSAO = 2;//alterado na Ativ 7.5 Pag124
     private static final String TABELA = "Alunos";
     private static final String DATABASE = "CadastroCaelum";
+    private Context ctx;
 
     //construtor
     public AlunoDAO(Context context) {
+
         super(context, DATABASE, null, VERSAO);
+        this.ctx = context;
     }
     //criando o banco
     @Override
@@ -76,7 +79,16 @@ class AlunoDAO extends SQLiteOpenHelper{
         List<Aluno> alunos = new ArrayList<Aluno>();
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABELA + ";",null);
+
+        String query = "SELECT * FROM " + TABELA;
+        if (new PreferenciasDAO(ctx).isAlfabetica()){
+            query += " ORDER BY nome ASC ";
+        }
+
+        Cursor c = getReadableDatabase().rawQuery(query + ";",null);
+
+
+
 
         while (c.moveToNext()){
             Aluno aluno = new Aluno();

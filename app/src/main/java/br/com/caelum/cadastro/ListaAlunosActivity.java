@@ -125,7 +125,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     }
 
-    private void carregarLista() {
+    public void carregarLista() {
 
         AlunoDAO dao = new AlunoDAO(this);
         this.alunos = dao.getLista();
@@ -282,6 +282,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
             Intent mostrarAlunos = new Intent(this, MostraAlunosAcivity.class);
             startActivity(mostrarAlunos);
             return true;
+
+        } else if (item.getItemId() == R.id.menu_opcoes){
+           // OpcoesFragment frag = new OpcoesFragment();
+            new OpcoesFragment().show(getSupportFragmentManager(),"");
 
         }
 
